@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  namespace: test
+  name: jmeter
+  labels:
+    app: jmeter
+    environment: staging
+    flavour: pipeline
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: jmeter-dir
+      hostPath:
+        path: /mnt/k8s/jmeter
+  containers:
+    - name: jmeter
+      image: taskiy/jmeter:5.3
+      volumeMounts:
+        - name: jmeter-dir
+          mountPath: "/mnt/jmeter"
+      args: [
+        "-n", 
+        "-t", "/mnt/jmeter/scripts/LoadTestForCarkiySSDListingPage.jmx", 
+        "-l", "/mnt/jmeter/logs/LoadTestForCarkiySSDListingPage.jtl"
+      ]
+  nodeSelector:
+    kubernetes.io/hostname: stg-w3
