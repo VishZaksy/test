@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   namespace: test
-  name: jmeter-$(JOB_NAME)
+  name: jmeter-${JOB_NAME}
   labels:
-    app: jmeter-$(JOB_NAME)
+    app: jmeter-${JOB_NAME}
     environment: staging
     flavour: pipeline
 spec:
