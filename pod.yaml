@@ -21,7 +21,7 @@ spec:
           mountPath: "/mnt/jmeter"
       args: [
         "-n", 
-        "-t", "/mnt/jmeter/scripts/$(JMETER_SCRIPT).jmx"
+        "-t", "/mnt/jmeter/scripts/${JMETER_SCRIPT}.jmx"
       ]
   nodeSelector:
     kubernetes.io/hostname: stg-w3
