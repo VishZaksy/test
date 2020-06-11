@@ -16,12 +16,15 @@ spec:
   containers:
     - name: jmeter
       image: taskiy/jmeter:5.3
+      env:
+        - name: JMETER_SCRIPT
+          value: ${JMETER_SCRIPT}
       volumeMounts:
         - name: jmeter-dir
           mountPath: "/mnt/jmeter"
       args: [
         "-n", 
-        "-t", "/mnt/jmeter/scripts/${JMETER_SCRIPT}.jmx"
+        "-t", "/mnt/jmeter/scripts/$(JMETER_SCRIPT).jmx"
       ]
   nodeSelector:
     kubernetes.io/hostname: stg-w3
