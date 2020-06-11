@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Pod
 metadata:
   namespace: test
-  name: jmeter
+  name: jmeter-$(JOB_NAME)
   labels:
-    app: jmeter
+    app: jmeter-$(JOB_NAME)
     environment: staging
     flavour: pipeline
 spec:
@@ -21,8 +21,7 @@ spec:
           mountPath: "/mnt/jmeter"
       args: [
         "-n", 
-        "-t", "/mnt/jmeter/scripts/LoadTestForCarkiySSDListingPage.jmx", 
-        "-l", "/mnt/jmeter/logs/LoadTestForCarkiySSDListingPage.jtl"
+        "-t", "/mnt/jmeter/scripts/$(JMETER_SCRIPT).jmx"
       ]
   nodeSelector:
     kubernetes.io/hostname: stg-w3
