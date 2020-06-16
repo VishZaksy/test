@@ -1,0 +1,40 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  namespace: test
+  name: jmeter-${JOB_NAME}
+  labels:
+    app: jmeter-${JOB_NAME}
+    environment: staging
+    flavour: pipeline
+spec:
+  selector:
+    matchLabels:
+      app: jmeter-${JOB_NAME}
+  template:
+    metadata:
+      labels:
+        app: jmeter-${JOB_NAME}
+        environment: staging
+        flavour: pipeline
+    spec:
+      volumes:
+        - name: jmeter-dir
+          hostPath:
+            path: /mnt/k8s/jmeter
+      containers:
+        - name: jmeter
+          image: taskiy/jmeter:5.3
+          env:
+            - name: JMETER_SCRIPT
+              value: ${JMETER_SCRIPT}
+          volumeMounts:
+            - name: jmeter-dir
+              mountPath: "/mnt/jmeter"
+          args: [
+            "-n", 
+            "-t", "/mnt/jmeter/scripts/$(JMETER_SCRIPT).jmx"
+          ]
+      restartPolicy: Never
+      nodeSelector:
+        kubernetes.io/hostname: stg-w3
