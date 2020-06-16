@@ -8,9 +8,8 @@ metadata:
     environment: staging
     flavour: pipeline
 spec:
-  selector:
-    matchLabels:
-      app: jmeter-${JOB_NAME}
+  backoffLimit: 1
+  activeDeadlineSeconds: 10
   template:
     metadata:
       labels:
