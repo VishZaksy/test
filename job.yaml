@@ -35,5 +35,5 @@ spec:
             "-t", "/mnt/jmeter/scripts/$(JMETER_SCRIPT).jmx"
           ]
       restartPolicy: Never
-      # nodeSelector:
-      #   kubernetes.io/hostname: stg-w3
+      nodeSelector:
+        kubernetes.io/hostname: stg-w3
